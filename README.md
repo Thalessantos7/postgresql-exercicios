@@ -4,6 +4,8 @@ Repositório contendo a resolução dos exercícios realizados durante o curso d
 
 O objetivo deste projeto é registrar minha evolução na linguagem SQL, praticando consultas, manipulação de dados e recursos do PostgreSQL.
 
+[Link do Curso](https://www.udemy.com/share/1082eQ3@pkxKKIZHhB7cuXeVhB0Gjf17sTDp1slvwNQzysRUZ7gdSA1zpIyRq6ea_k48UiGIGQ==/)
+
 ---
 
 ## 📚 Conteúdo
