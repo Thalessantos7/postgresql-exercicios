@@ -454,3 +454,26 @@ insert into pedido_produto(idpedido, idproduto, quantidade, valor_unitario)
 values (15, 3, 1, 200);
 
 select * from pedido_produto;
+
+select avg(valor) from pedido;
+
+select count(idmunicipio) from municipio;
+
+select count(*) from municipio;
+
+select * from transportadora;
+select count(logradouro) from transportadora;
+select count(idtransportadora) from transportadora;
+
+select * from municipio;
+select count(idmunicipio) from municipio where iduf = 2;
+
+select max(valor) from pedido;
+
+select min(valor), max(valor) from pedido;
+
+select sum(valor) from pedido;
+
+select idcliente, sum(valor) from pedido group by idcliente;
+
+select idcliente, sum(valor) from pedido group by idcliente having sum(valor) > 500;
