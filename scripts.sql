@@ -502,3 +502,27 @@ from
 	cliente as cln
 right outer join
 	profissao as prf on cln.idprofissao = prf.idprofissao
+
+select * from pedido
+select
+	data_pedido,
+	extract(day from data_pedido),
+	extract(month from data_pedido),
+	extract(year from data_pedido)
+from
+	pedido
+
+select nome, substring(nome from 1 for 5), substring(nome, 2) from cliente
+
+select nome, upper(nome) from cliente
+
+select nome, cpf, coalesce(cpf, 'Não informado') from cliente
+
+select
+	case sigla
+		when 'PR' then 'Paraná'
+		when 'SC' then 'Santa Catarina'
+	else 'Outros'
+	end as uf
+from
+	uf
