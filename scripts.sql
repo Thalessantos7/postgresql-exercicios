@@ -526,3 +526,48 @@ select
 	end as uf
 from
 	uf
+	
+-- Subconsultas
+
+-- Selecionar a data do pedido e o valor onde o valor seja maior que a média dos
+-- valores de todos os pedidos
+select
+	data_pedido,
+	valor
+from
+	pedido
+where
+	valor > (select avg(valor) from pedido)
+
+-- Exemplo com count
+select
+	pdd.data_pedido,
+	pdd.valor,
+	(select sum(quantidade) from pedido_produto pdp where pdp.idpedido = pdd.idpedido) as total
+from
+	pedido pdd
+
+select * from pedido_produto
+
+-- Exemplo com update
+
+select * from pedido
+
+update pedido set valor = valor + ((valor * 5) / 100)
+where valor > (select avg(valor) from pedido)
+
+-- Views
+drop view cliente_profissao
+
+create view cliente_profissao as
+select
+	cln.nome as cliente,
+	cln.cpf,
+	prf.nome as profissao
+from
+	cliente cln
+left join
+	profissao prf on cln.idprofissao = prf.idprofissao
+
+select cliente from cliente_profissao where profissao = 'Professor'
+select * from cliente_profissao
