@@ -1,5 +1,4 @@
 create table cliente (
-
 	idcliente integer not null,
 	nome varchar(50) not null, -- Thales 6, 44
 	cpf char(11),
@@ -18,7 +17,6 @@ create table cliente (
 
 	-- primary key
 	constraint pk_cln_idcliente primary key (idcliente)
-	
 );
 
 insert into cliente (idcliente, nome, cpf, rg, data_nascimento, genero, profissao, nacionalidade, logradouro, numero, complemento, bairro, municipio, uf)
@@ -111,13 +109,11 @@ delete from cliente
 where idcliente = 16;
 
 create table profissao (
-
 	idprofissao integer not null,
 	nome varchar(30) not null,
 
 	constraint pk_prf_idprofissao primary key (idprofissao),
 	constraint un_prf_nome unique (nome)
-
 );
 
 insert into profissao(idprofissao, nome) values (1, 'Estudante');
@@ -129,13 +125,11 @@ insert into profissao(idprofissao, nome) values (5, 'Professor');
 select * from profissao;
 
 create table nacionalidade (
-
 	idnacionalidade integer not null,
 	nome varchar(30) not null,
 
 	constraint pk_ncn_idnacionalidade primary key (idnacionalidade),
 	constraint un_ncn_nome unique (nome)
-
 );
 
 select nacionalidade from cliente;
@@ -163,13 +157,11 @@ insert into complemento (idcomplemento, nome) values (2, 'Apartamento');
 select * from complemento;
 
 create table bairro (
-
 	idbairro integer not null,
 	nome varchar(30) not null,
 
 	constraint pk_brr_idbairro primary key (idbairro),
 	constraint un_brr_nome unique (nome)
-
 );
 
 insert into bairro(idbairro, nome) values (1, 'Cidade Nova');
@@ -246,7 +238,6 @@ update cliente set idbairro = 4 where idcliente = 7;
 select * from cliente;
 
 create table uf (
-
 	iduf integer not null,
 	nome varchar(30) not null,
 	sigla char(2) not null,
@@ -254,7 +245,6 @@ create table uf (
 	constraint pk_ufd_idunidade_federacao primary key (iduf),
 	constraint un_ufd_nome unique (nome),
 	constraint un_ufd_sigla unique (sigla)
-
 );
 
 insert into uf(iduf, nome, sigla) values (1, 'Santa Catarina', 'SC');
@@ -308,7 +298,6 @@ update cliente set idmunicipio = 9 where idcliente in (14, 15);
 select * from cliente;
 
 create table pedido (
-
 	idpedido integer not null,
 	idcliente integer not null,
 	idtransportadora integer,
@@ -320,7 +309,6 @@ create table pedido (
 	constraint fk_pdd_idcliente foreign key (idcliente) references cliente (idcliente),
 	constraint fk_pdd_idtransportadora foreign key (idtransportadora) references transportadora (idtransportadora),
 	constraint fk_pdd_idvendedor foreign key (idvendedor) references vendedor (idvendedor)
-
 );
 
 select * from transportadora;
@@ -375,7 +363,6 @@ select * from pedido;
 select * from produto;
 
 create table pedido_produto (
-
 	idpedido integer not null,
 	idproduto integer not null,
 	quantidade integer not null,
@@ -384,7 +371,6 @@ create table pedido_produto (
 	constraint pk_pdp_idpedidoproduto primary key (idpedido, idproduto),
 	constraint fk_pdp_idpedido foreign key (idpedido) references pedido (idpedido),
 	constraint fk_pdp_idproduto foreign key (idproduto) references produto (idproduto)
-
 );
 
 insert into pedido_produto(idpedido, idproduto, quantidade, valor_unitario)
@@ -550,7 +536,6 @@ from
 select * from pedido_produto
 
 -- Exemplo com update
-
 select * from pedido
 
 update pedido set valor = valor + ((valor * 5) / 100)
@@ -571,3 +556,29 @@ left join
 
 select cliente from cliente_profissao where profissao = 'Professor'
 select * from cliente_profissao
+
+-- Campos autoincremento
+create table exemplo (
+	idexemplo serial not null,
+	nome varchar(50) not null,
+
+	constraint pk_exemplo_idexemplo primary key (idexemplo)
+);
+
+insert into exemplo(nome) values ('Exemplo 1');
+insert into exemplo(nome) values ('Exemplo 2');
+insert into exemplo(nome) values ('Exemplo 3');
+insert into exemplo(nome) values ('Exemplo 4');
+insert into exemplo(nome) values ('Exemplo 5');
+
+select * from exemplo;
+
+select * from bairro;
+
+select max(idbairro) + 1 from bairro;
+create sequence bairro_id_seq minvalue 5
+alter table bairro alter idbairro set default nextval('bairro_id_seq')
+alter sequence bairro_id_seq owned by bairro.idbairro
+insert into bairro (nome) values ('Teste 1');
+insert into bairro (nome) values ('Teste 2');
+select * from bairro;
