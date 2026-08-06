@@ -590,3 +590,6 @@ insert into pedido(idcliente, idvendedor) values (1, 1)
 insert into pedido(idcliente, idvendedor, data_pedido, valor) values (1, 1, '2022-10-10', 234);
 
 select * from pedido
+
+-- Índices
+create index idx_cln_nome on cliente (nome);
