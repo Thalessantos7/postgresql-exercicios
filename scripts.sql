@@ -617,3 +617,14 @@ end;
 $$
 
 select data_pedido, valor, idcliente, get_nome_by_id(idcliente) from pedido;
+
+-- Stored procedures
+CREATE PROCEDURE insere_bairro(nome_bairro VARCHAR(30)) LANGUAGE SQL AS
+$$
+	INSERT INTO bairro (nome) VALUES (nome_bairro);
+$$;
+
+CALL insere_bairro('Teste procedure')
+SELECT * FROM bairro
+
+SELECT * FROM produto
