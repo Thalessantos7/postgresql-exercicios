@@ -697,3 +697,30 @@ GRANT SELECT ON cliente_dados, dados_pedido TO estagiario;
 
 CREATE ROLE maria login PASSWORD '123' IN ROLE gerente;
 CREATE ROLE pedro login PASSWORD '321' IN ROLE estagiario;
+
+-- Transações
+CREATE TABLE conta (
+	idconta SERIAL NOT NULL,
+	cliente nome_medio NOT NULL,
+	saldo moeda NOT NULL DEFAULT 0,
+
+	CONSTRAINT pk_cnt_idconta PRIMARY KEY (idconta)
+)
+
+INSERT INTO conta (cliente, saldo) VALUES ('Cliente 1', 1000);
+INSERT INTO conta (cliente, saldo) VALUES ('Cliente 2', 500);
+
+SELECT * FROM conta
+
+UPDATE conta SET saldo = saldo - 100 WHERE idconta = 1;
+UPDATE conta SET saldo = saldo + 100 WHERE idconta = 2;
+
+BEGIN;
+UPDATE conta SET saldo = saldo - 100 WHERE idconta = 1;
+UPDATE conta SET saldo = saldo + 100 WHERE idconta = 2;
+ROLLBACK;
+
+BEGIN;
+UPDATE conta SET saldo = saldo - 100 WHERE idconta = 1;
+UPDATE conta SET saldo = saldo + 100 WHERE idconta = 2;
+COMMIT;
