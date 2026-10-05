@@ -626,5 +626,28 @@ $$;
 
 CALL insere_bairro('Teste procedure')
 SELECT * FROM bairro
-
 SELECT * FROM produto
+
+-- Triggers
+CREATE TABLE bairro_auditoria (
+	idbairro INTEGER NOT NULL,
+	data_criacao TIMESTAMP NOT NULL
+)
+
+CREATE OR REPLACE FUNCTION bairro_log() RETURNS TRIGGER LANGUAGE plpgsql AS
+$$
+BEGIN
+	-- old 4 -> new 6
+	INSERT INTO bairro_auditoria (idbairro, data_criacao) VALUES (NEW.idbairro, CURRENT_TIMESTAMP);
+	RETURN NEW;
+END;
+$$;
+
+CREATE OR REPLACE TRIGGER log_bairro_trigger AFTER INSERT ON bairro FOR EACH ROW EXECUTE PROCEDURE bairro_log();
+
+CALL insere_bairro ('Teste 10');
+CALL insere_bairro ('Teste 20');
+CALL insere_bairro ('Teste 30');
+
+SELECT * FROM bairro
+SELECT * FROM bairro_auditoria
