@@ -15,7 +15,7 @@ create table cliente (
 	uf varchar(30),
 	observacoes text,
 
-	-- primary key
+	-- Primary key
 	constraint pk_cln_idcliente primary key (idcliente)
 );
 
@@ -684,3 +684,10 @@ CREATE DOMAIN quantidade AS SMALLINT;
 ALTER TABLE bairro ALTER COLUMN nome TYPE nome_medio;
 
 DROP VIEW cliente_dados;
+
+-- Usuários e permissões
+CREATE ROLE gerente;
+CREATE ROLE estagiario;
+
+GRANT SELECT, INSERT ON bairro, cliente, complemento, fornecedor, municipio, nacionalidade, pedido, pedido_produto, produto, profissao, transportadora, uf, vendedor TO gerente WITH GRANT OPTION;
+GRANT SELECT ON cliente_dados, dados_pedido TO estagiario;
