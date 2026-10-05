@@ -689,5 +689,11 @@ DROP VIEW cliente_dados;
 CREATE ROLE gerente;
 CREATE ROLE estagiario;
 
-GRANT SELECT, INSERT ON bairro, cliente, complemento, fornecedor, municipio, nacionalidade, pedido, pedido_produto, produto, profissao, transportadora, uf, vendedor TO gerente WITH GRANT OPTION;
+GRANT SELECT, INSERT, DELETE, UPDATE ON bairro, cliente, complemento, fornecedor, municipio, nacionalidade, pedido, pedido_produto, produto, profissao, transportadora, uf, vendedor TO gerente WITH GRANT OPTION;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO gerente;
+-- Revoke
+
 GRANT SELECT ON cliente_dados, dados_pedido TO estagiario;
+
+CREATE ROLE maria login PASSWORD '123' IN ROLE gerente;
+CREATE ROLE pedro login PASSWORD '321' IN ROLE estagiario;
